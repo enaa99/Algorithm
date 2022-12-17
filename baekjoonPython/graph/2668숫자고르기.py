@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
@@ -19,8 +18,8 @@ def DFS(value,low,high):
     if l[value] in low:
         if low == high:
             answer.update(low)
-            return True
-        return False
+            return 
+        return 
     return DFS(l[value],low,high)
 
 for i in range(1,N+1):

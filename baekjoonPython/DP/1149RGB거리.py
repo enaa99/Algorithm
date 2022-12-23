@@ -19,3 +19,10 @@ for i in range(1,N):
             dp[i][j] = min(graph[i][j]+dp[i-1][j-2],graph[i][j]+dp[i-1][j-1])
 
 print(min(dp[N-1]))
+
+# for i in range(1,N):
+#         dp[i][0] = min(graph[i][0]+dp[i-1][2],graph[i][0]+dp[i-1][1])
+#         dp[i][1] = min(graph[i][1]+dp[i-1][0],graph[i][1]+dp[i-1][2])
+#         dp[i][2] = min(graph[i][2]+dp[i-1][0],graph[i][2]+dp[i-1][1])
+
+

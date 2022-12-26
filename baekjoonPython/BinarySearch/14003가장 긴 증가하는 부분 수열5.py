@@ -1,8 +1,10 @@
 import sys
+from collections import deque
+
 input = sys.stdin.readline
 
 _ = input()
-nums = list(map(int, input().split()))
+nums = deque(map(int, input().split()))
 
 # Binary_search method
 
@@ -31,10 +33,9 @@ def binary_search(lis_arr, num): #
 lis_arr = [-1000000001]
 lis_total = [(-1000000001,0)] # number, index
 
-nums = nums[::-1] # stack처럼 쓰기 위해
 
 while nums:
-    num = nums.pop()
+    num = nums.popleft()
 
     if num > lis_arr[-1]:
         lis_total.append((num, len(lis_arr)))

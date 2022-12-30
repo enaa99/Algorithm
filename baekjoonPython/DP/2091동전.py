@@ -2,12 +2,20 @@ import sys
 
 input = sys.stdin.readline
 
-# X, A, B, C, D
-l = list(map(int,input().split()))
+# X,A,B,C,D
+
+X,a,b,c,d = map(int,input().split())
 
 
-# 1센트A, 5센트B, 10센트C, 25센트D X원짜리 커피
 
-# 동전의 개수 최대
 
-ans = 0
+# 동전의 개수 최대로
+# a -> 1 / b -> 5 / c -> 10 / d -> 25
+
+
+dp = [[0]*4 for _ in range(10001)]
+
+
+for i in range(X):
+    for j in range(4):
+        dp[i][j] = 

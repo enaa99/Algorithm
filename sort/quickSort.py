@@ -1,4 +1,3 @@
-from typing import MutableSequence
 
 def qsort(a,left,right):
     pl = left

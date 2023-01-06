@@ -13,7 +13,7 @@ mine.sort()
 
 for num in range(len(others)):
     k = bisect_left(mine,others[num])
-    if k <= len(mine)
+    if k <= len(mine)-1:
         if mine[k] == others[num]:
             others[num] = 1
             continue

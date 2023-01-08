@@ -11,7 +11,7 @@ for i in range(T):
     dp = [0]*(len(days))
     for j in range(1,len(days)):
         for u in range(j-1,-1,-1):
-            if days[j] > days[u]:
+            if days[j] > days[u] :
                 dp[j] += days[j]-days[u]
             else:
                 # days[j] < days[u]

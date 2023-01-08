@@ -1,37 +1,25 @@
-import sys
-sys.setrecursionlimit(10**5)
+from sys import stdin
 
-input = sys.stdin.readline
+N, stone_n = map(int, stdin.readline().split())
 
-N,M = map(int,input().split())
-
-# M은 점프할 수 없는 돌
-
-small = [int(input()) for _ in range(M)]
-
-dp = [sys.maxsize]*(N+1)
+stone = set()
+for _ in range(stone_n):
+    stone.add(int(stdin.readline().rstrip()))
 
 
-dp[1] = 0
+# 등차수열 합
+dp  = [[10001]* (int((2*N)**0.5)+2)  for _ in range(N+1)]
+
+dp[1][0] = 0
+for i in range(2, N+1):
+    if i in stone:
+        continue
+    for v in range(1,int((2*i)**0.5)+1):
+        dp[i][v] = min(dp[i-v][v-1],dp[i-v][v],dp[i-v][v+1]) +1
 
 
-# 점프는 k-1,k,k+1 
-def jump(k,v):
-    if k+v> N or k >N or k+v+1 >N: return
-    
-    if v != 1 and k+v-1 not in small:
-        dp[k+v-1] = min(dp[k+v-1],dp[k] + 1)
-        jump(k+v-1,v-1)
-    if k+v not in small:
-        dp[k+v] = min(dp[k+v],dp[k]+1)
-        jump(k+v,v)
-    if k+v+1 not in small:
-        dp[k+v+1] = min(dp[k]+1,dp[k+v+1])
-        jump(k+v+1,v+1)
-
-jump(1,1)
-
-if dp[N] != sys.maxsize:
-    print(dp[N])
-else:
+ans = min(dp[N])
+if ans == 10001:
     print(-1)
+else:
+    print(ans)

@@ -1,13 +1,7 @@
-import sys
 
-# input = sys.stdin.readline
+k = set()
+for i in range(10):
+    a = int(input())
+    k.add(a%42)
 
-while True:
-    try:
-        a,b = map(int,input().split())
-    
-    
-    except:
-        break
-    
-    print(a+b)
+print(len(k))

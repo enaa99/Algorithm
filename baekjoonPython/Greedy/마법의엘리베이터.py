@@ -22,7 +22,6 @@ def solution(storey):
                 tmp[num+1] +=1
             tmp[num] = 0            
     
-    
     return tmp
 
 solution(16)

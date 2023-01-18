@@ -14,5 +14,4 @@ def solution(s):
     
     return ''.join(s)
 
-
 solution('try hello world')

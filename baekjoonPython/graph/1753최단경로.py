@@ -35,7 +35,7 @@ def dijkstra(start):
 dijkstra(start)
 
 for i in range(1,len(distance)):
-    if i == sys.maxsize:
+    if distance[i] == sys.maxsize:
         print('INF')
     else:
-        print(i)
+        print(distance[i])

@@ -7,7 +7,6 @@ input = sys.stdin.readline
 N,M = map(int,input().split())
 
 
-
 n_dict = defaultdict(int)
 
 for _ in range(N):

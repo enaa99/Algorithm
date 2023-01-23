@@ -12,9 +12,6 @@ def solution(want,number,discount):
     for i in range(len(want)):
         buy[want[i]] = number[i]
     
-    
-    
-    
     def cmp(arr1,arr2):
         for key in arr1.keys():
             if arr1[key] > arr2[key]:
@@ -30,8 +27,6 @@ def solution(want,number,discount):
         
         if cmp(buy,check):
             answer +=1
-        
-    
     
     return answer
 

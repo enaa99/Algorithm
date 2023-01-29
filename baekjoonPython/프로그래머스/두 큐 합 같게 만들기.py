@@ -20,7 +20,7 @@ def solution(queue1, queue2):
             queue2.append(k)
             sum_a -= k
             sum_b += k
-        elif sum(queue1) < sum(queue2):
+        elif sum_a < sum_b:
             k = queue2.popleft()
             queue1.append(k)
             sum_a += k

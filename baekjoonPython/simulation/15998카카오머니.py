@@ -8,7 +8,7 @@ def gcd(a, b):
         return a
     else:
         return gcd(b, a % b)
- 
+
 # log (a,b)
 # a 입금/출금 결과, b 결과 후 잔액
 # a > 0 , 입금

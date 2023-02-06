@@ -34,3 +34,9 @@ if path1 >= sys.maxsize and path2 >= sys.maxsize:
     print(-1)
 else:
     print(min(path1, path2))
+    
+    
+    
+    
+
+    

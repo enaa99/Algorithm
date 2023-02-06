@@ -16,8 +16,9 @@ def solution(x,y,n):
                 return cnt
 
             for i in ([v+n,v*2,v*3]):
-                if num: continue
+                if num[i]: continue
                 if i>y: break
+                num[i] += 1
                 q.append([cnt+1,i])
             
         return -1

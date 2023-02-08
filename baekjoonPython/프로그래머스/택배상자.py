@@ -6,7 +6,6 @@ def solution(order):
     order = deque(order)
 
 
-
     for i in range(len(order)):
         if i+1 != order[0]:
             s.append(i+1)

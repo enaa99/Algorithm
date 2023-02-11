@@ -14,5 +14,5 @@ for i in range(9):
     if answer[0] < k[0]:
         answer[0],answer[1],answer[2] = k[0],k[1],k[2]
     
-
+print(answer[0])
 print(answer[1],answer[2])

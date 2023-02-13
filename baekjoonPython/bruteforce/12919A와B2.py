@@ -1,13 +1,35 @@
+import sys
+from collections import deque
 
-s = input()
-t = input()
+input = sys.stdin.readline
 
-def find(t):
-    if len(t)==len(s):
-        return t==s
-    if t[0] == 'B' and find(t[:0:-1]): #뒤집이서 0번째 빼고 출력 
-        return True
-    if t[-1] == 'A' and find(t[:-1]): #추가한 A빼고 
-        return True
+S = input().strip()
+
+T = input().strip()
+
+# 1. 문자열의 뒤에 A를 추가
+# 2. 문자열의 뒤에 B를 추가하고 문자열 뒤집는다
+
+len_s = len(S)
+def BFS():
+    q = deque()
+    q.append(T)
     
-print(1 if find(t) else 0)
+    while q:
+        k = q.popleft()
+        
+        if len_s > len(k) : continue
+        
+        if S == k:
+            return 1
+        
+        if k[-1] == 'A':
+            q.append(k[:-1])
+        if k[0] == 'B':
+            k = k[::-1]
+            q.append(k[:-1])
+        
+            
+    return 0
+
+print(BFS())

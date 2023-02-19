@@ -35,6 +35,7 @@ def find_way():
                 xa = x + dx[i]
                 ya = y + dy[i]
                 
+                
                 if xa < 0 or ya < 0 or xa >=R or ya >=C: continue
                 
                 if graph[xa][ya] == '.' or graph[xa][ya] == 'J':
@@ -47,6 +48,7 @@ def find_way():
             for i in range(4):
                 xa = x + dx[i]
                 ya = y + dy[i]
+                
                 
                 
                 if xa < 0 or ya < 0 or xa >=R or ya >=C: 

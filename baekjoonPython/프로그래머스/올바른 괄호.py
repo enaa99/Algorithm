@@ -1,5 +1,5 @@
 def solution(s):
-    answer =  True
+    
     
     q = []
     for i in s:
@@ -11,5 +11,8 @@ def solution(s):
         else:
             q.append('(')
     
+    if q:
+        return False
+    else:
+        return True
     
-    return answer

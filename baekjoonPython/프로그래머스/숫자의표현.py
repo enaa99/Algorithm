@@ -10,10 +10,6 @@ def solution(n):
 
         if sum == n:
             answer += 1
-        
-    
-    
-    
     
     
     

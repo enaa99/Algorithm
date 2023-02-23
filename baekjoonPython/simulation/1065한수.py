@@ -17,4 +17,6 @@ def count(k):
     
     return cnt
 
+
+
 print(count(N))

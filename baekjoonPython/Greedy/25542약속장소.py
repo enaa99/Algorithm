@@ -1,32 +1,23 @@
-import sys
+n, l = map(int, input().split())
+names = [input().strip() for _ in range(n)]
 
-input = sys.stdin.readline
-
-
-# 가게이름 N, 길이 L
-N,L = map(int,input().split())
-
-l = [input().strip() for _ in range(N)]
-
-tmp = list(l[0])
-
-
-
-cnt = [0]*L
-temp =[0]*N
-
-for i in range(L):
-    for j in range(1,N):
-        if tmp[i] != l[j][i]:
-            cnt[i] +=1
-            temp[j] += 1
-    
-    for k in temp:
-        if k > 2:
-            print('CALL FRIEND')
-            exit(0)
-    if cnt[i] == N-1:
-        tmp[i] = l[-1][i]
-        #바꾸기작업
-
-print("".join(tmp))
+for i in range(l):
+    for j in range(26):
+        tmp = chr(ord('A') + j)
+        flag = True
+        for name in names:
+            cnt = 0
+            for k in range(l):
+                if k == i:
+                    if name[k] != tmp:
+                        cnt += 1
+                else:
+                    if name[k] != names[0][k]:
+                        cnt += 1
+            if cnt > 1:
+                flag = False
+                break
+        if flag:
+            print(names[0][:i] + tmp + names[0][i+1:])
+            exit()
+print("CALL FRIEND")

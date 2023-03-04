@@ -6,6 +6,6 @@ def solution(citations):
     len_k = len(citations)
     for i in range(len_k):
         if citations[i] >= len_k -i:
-            return citations[i]
-    
+            return len_k-i
+    return 0
     

@@ -1,35 +1,31 @@
-import sys
-from collections import Counter
+def solve(w,k):
+    d = {}
+    minimum = 10001
+    maximum = -1
+    for i in range(len(w)):
+        if w[i] in d:
+            d[w[i]].append(i)
+        else:
+            d[w[i]] = [i]
+    for key,array in d.items():
+        s = 0
+        e = s + k - 1
+        if len(array) < k:
+            continue
+        while e < len(array):
+            length = array[e] - array[s] + 1
+            minimum = min(minimum, length)
+            maximum = max(maximum, length)
+            s += 1
+            e+= 1
+    return minimum, maximum
 
-input = sys.stdin.readline
-
-T = int(input())
-
-for _ in range(T):
-    
-    W = list(input().rstrip())
-    N = int(input())
-    
-    dic = Counter(W)
-    
-    
-    tmp = []
-    for i in range(len(W)):
-        cnt = N -1
-        if dic[W[i]] >= N:
-            dic[W[i]] -= 1
-            for j in range(i+1,len(W)):
-                if W[j] == W[i]: 
-                    cnt -=1
-                
-                    if cnt == 0:
-                        if i == 0:
-                            tmp.append(j)
-                        else:
-                            tmp.append(j-i+1)
-                        break
-    if tmp:
-        print(min(tmp),end = ' ')
-        print(max(tmp))
-    else:
+t = int(input())
+for i in range(t):
+    w = input()
+    k = int(input())
+    minimum,maximum = solve(w,k)
+    if minimum == -1 or maximum == -1:
         print(-1)
+    else:
+        print(minimum, maximum)

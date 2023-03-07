@@ -1,4 +1,4 @@
-def solutioin(data,col,row_begin,row_end):
+def solution(data,col,row_begin,row_end):
     answer =0 
     
     # col 값에 따라 오름차순 정렬
@@ -19,4 +19,6 @@ def solutioin(data,col,row_begin,row_end):
     
     return answer
 
-solutioin([[2,2,6],[1,5,10],[4,2,9],[3,8,3]],2,2,3)
+
+
+solution([[2,2,6],[1,5,10],[4,2,9],[3,8,3]],2,2,3)

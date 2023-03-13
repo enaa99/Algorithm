@@ -16,42 +16,41 @@ home = []
 chicken = []
 
 # M 폐업 시키지 않을 개수 
-def BFS(a,b):
-    q = deque()
-    q.append([a,b])
-    dx = [1,0,-1,0]
-    dy = [0,1,0,-1]
-    
-    isVisited = [[0]*N for _ in range(N)]
-    
-    while q:
-        x,y = q.popleft()
+
+
+for i in range(N):
+    for j in range(N):
+        if graph[i][j] == 1:
+            home.append([i+1,j+1])
+        elif graph[i][j] == 2:
+            chicken.append([i+1,j+1])
+
+
+
+isVisited =[0]*len(chicken)
+arr = [0]*M
+answer = sys.maxsize
+
+
+def DFS(cnt,idx):
+    global answer
+    if cnt == M:
+        dist = [sys.maxsize]*len(home)
+        for k in range(len(home)):
+            for req in arr:
+                dist[k] = min(dist[k],abs(req[0]-home[k][0])+abs(req[1]-home[k][1]))
+        answer = min(sum(dist),answer)
         
-        if graph[x][y] == 1:
-            home.append([xa+1,ya+1])
-        elif graph[x][y] == 2 :
-            chicken.append([xa+1,ya+1])
-        
-        for i in range(4):
-            xa = x + dx[i]
-            ya = y + dy[i]
-            if xa < 0 or ya < 0 or ya>=N or xa >= N or isVisited[xa][ya]: continue
-            isVisited[xa][ya] = 1
+        return
+    
+    for num in range(idx,len(chicken)):
+        if not isVisited[num]:
+            arr[cnt] = chicken[num]
+            isVisited[num] = 1
+            DFS(cnt+1,num+1)
+            isVisited[num] = 0
             
-            q.append([xa,ya])
+DFS(0,0)
 
 
-BFS(0,0)
-
-dist = []
-
-for x,y in chicken:
-    k = sys.maxsize
-    for a,b in home:
-        k = min(k,abs(x-a)+abs(b-y))
-    dist.append(k)
-
-dist.sort()
-
-
-print(sum(dist[abs(len(dist)-M):]))
+print(answer)

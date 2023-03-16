@@ -9,4 +9,5 @@ for i in graph:
     if i ==0 : continue
     answer += i**2
 
+
 print(answer%10)

@@ -1,5 +1,5 @@
 def solution(s):
-    answer = 0
+    
     
     q = []
     
@@ -13,12 +13,12 @@ def solution(s):
             else:
                 break
     
+    if q:
+        return 0
+    else:
+        return 1
     
     
-    
-    
-    
-    return answer
 
 
 solution('baabaa')

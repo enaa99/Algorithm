@@ -29,7 +29,6 @@ def solution(p):
         return ""
     
     u, v = divide(p)
-
     
     if check(u):
         return u + solution(v)

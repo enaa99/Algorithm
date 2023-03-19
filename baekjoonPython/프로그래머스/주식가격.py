@@ -1,6 +1,6 @@
 def solution(prices):
     
-    # 최대값잡아주기
+    #모든 prices의 값이 떨어지지 않았다는 가정하에 answer의 값을 초기화한다.
     answer =[i for i in range(len(prices)-1,-1,-1)]
     
     s = [0]
@@ -14,4 +14,4 @@ def solution(prices):
     
     return answer
 
-solution([4,1,2,3,4,5,1,6,3,1,2,1])
+solution([1,2,0,2,3])

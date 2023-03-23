@@ -21,8 +21,6 @@ def insert(a):
             a[j] = temp
 
 
-
-
 if __name__ == '__main__':
     print('단순 삽입 정렬 수행')
     num = int(input('원소 수를 입력하세요.: '))

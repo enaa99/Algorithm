@@ -29,6 +29,8 @@ void push(Queue* q,int data){
         q->head = temp;
         q->tail = temp;
     }
+    // head->끝까지 선형탐색 O(n)
+    // 상수
     else{
         q->tail->next = temp;
         q->tail = temp;

@@ -25,3 +25,20 @@ def solution(number,k):
     return str(answer)
 
 solution('1231234',3)
+
+
+
+
+# def solution(number, k):
+#     s = [number[0]]
+    
+#     for num in number[1:]:
+#         while s and s[-1] < num and k>0:
+#             s.pop()
+#             k -= 1
+#         s.append(num)
+#     if k!=0:
+#         s = s[:len(s)-k]
+    
+#     return ''.join(s)
+

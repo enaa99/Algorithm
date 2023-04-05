@@ -1,18 +1,23 @@
 def solution(s):
-    q= []
-    for i in s:
-        if i ==')':
-            if q and q[-1] == '(':
-                q.pop()
+    
+    def check(l,r):
+        tmp = 0
+        while l >=0 and r < len(s):
+            if s[l] == s[r]:
+                tmp += 0
+                l -=1
+                r +=1
             else:
-                return False
-        else:
-            q.append(i)
-    if q:
-        return False
-            
+                break
+        return tmp
+    
+    
+    answer = 0
+    for i in range(len(s)):
+        answer += check(i,i+1)
+        answer += check(i,i)
 
-    return True
+    return answer
 
 # 뒤에 있는 큰 수 찾기
 

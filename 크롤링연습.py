@@ -23,7 +23,7 @@ import warnings
 import logging
 
 # 특정 포트에서 크롬실행 terminal에서 실행
-# /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/Users/enaJJJ/selenium/AutomationProfile &
+# /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/Users/eenaa/selenium/AutomationProfile &
 
 
 # 크롬 드라이버 경로 설정
@@ -39,7 +39,9 @@ options.add_experimental_option("debuggerAddress", "localhost:9222")
 # 디버그 포트를 이용하여 크롬 드라이버를 생성합니다.
 driver = webdriver.Chrome(service=service, options=options)
 
-ticket_button = driver.find_element(by='xpath',value="//img[contains(@alt, '미클로시 페레니 & 피닌 콜린스 듀오 콘서트')]/ancestor::a")
+ticket_button = driver.find_element(By.XPATH, "//a[contains(@onclick, 'goTicket')]")
+
+
 ticket_button.click()
 
 time.sleep(3)

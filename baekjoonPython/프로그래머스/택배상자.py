@@ -25,3 +25,21 @@ def solution(order):
     return answer
 
 solution([4, 3, 1, 2, 5])
+
+
+def solution2(order):
+    answer = 0
+    s = []
+    cnt = 0
+    
+    for i in range(1,len(order)+1):
+        s.append(i)
+        
+        while s and s[-1] == order[cnt]:
+            s.pop()
+            answer +=1
+            cnt +=1
+    
+    
+    
+    return answer

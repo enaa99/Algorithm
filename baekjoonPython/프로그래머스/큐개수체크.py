@@ -28,3 +28,5 @@ def solution(q):
     return answer
 
 
+solution([1,1,1,2,3,3,2,2])
+

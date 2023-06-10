@@ -41,19 +41,33 @@ driver = webdriver.Chrome(service=service, options=options)
 
 ticket_button = driver.find_element(By.XPATH, "//a[contains(@onclick, 'goTicket')]")
 
+main_window_handle = driver.current_window_handle
 
 ticket_button.click()
 
-time.sleep(3)
-# 날짜 선택
-# iframe 요소를 찾을 때까지 10초 기다림
 
-driver.switch_to.default_content()
-try:
-    iframe = driver.find_element(By.ID,'ifrmBookStep')
-except:
-    iframe = driver.find_element(By.ID,'ifrmBookStep')
+# 링크나 버튼을 클릭하여 새로운 창을 엽니다.
+# 새로운 창이 열리면 여러 개의 창 핸들이 있을 수 있습니다.
+
+# 모든 창 핸들을 얻습니다.
+all_window_handles = driver.window_handles
+
+new_window_handle = None
+for window_handle in all_window_handles:
+    if window_handle != main_window_handle:
+        new_window_handle = window_handle
+        break
+    
+
+driver.switch_to.window(new_window_handle)
+
+
+iframe = driver.find_element(By.ID, "ifrmBookStep")
+
 driver.switch_to.frame(iframe)
+
+# iframe이 로드될 때까지 대기
+
 
 # 변경된 값을 가진 요소를 클릭
 
@@ -125,3 +139,5 @@ time.sleep(1)
 # 결제하기 버튼 클릭
 pay_button = driver.find_element_by_css_selector('#LargeNextBtn')
 pay_button.click()
+
+

@@ -1,26 +1,12 @@
-import random
-import threading
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import StaleElementReferenceException, \
-    JavascriptException, NoAlertPresentException, TimeoutException
-
 from selenium.webdriver.chrome.service import Service
-
-import re
 import time
-import os
-import sys
-import warnings
-import logging
+
 
 # 특정 포트에서 크롬실행 terminal에서 실행
 # /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/Users/eenaa/selenium/AutomationProfile &
@@ -38,6 +24,7 @@ options.add_experimental_option("debuggerAddress", "localhost:9222")
 
 # 디버그 포트를 이용하여 크롬 드라이버를 생성합니다.
 driver = webdriver.Chrome(service=service, options=options)
+wait = WebDriverWait(driver, 10)
 
 ticket_button = driver.find_element(By.XPATH, "//a[contains(@onclick, 'goTicket')]")
 
@@ -45,7 +32,7 @@ main_window_handle = driver.current_window_handle
 
 ticket_button.click()
 
-
+time.sleep(1)
 # 링크나 버튼을 클릭하여 새로운 창을 엽니다.
 # 새로운 창이 열리면 여러 개의 창 핸들이 있을 수 있습니다.
 
@@ -62,82 +49,59 @@ for window_handle in all_window_handles:
 driver.switch_to.window(new_window_handle)
 
 
-iframe = driver.find_element(By.ID, "ifrmBookStep")
 
+
+# iframe으로 전환
+iframe = wait.until(EC.presence_of_element_located((By.ID, "ifrmBookStep")))
 driver.switch_to.frame(iframe)
-
-# iframe이 로드될 때까지 대기
-
-
-# 변경된 값을 가진 요소를 클릭
 
 
 # 회차 선택
-time_selector = driver.find_element_by_css_selector('li.time:nth-child(2) > a:nth-child(1) > img:nth-child(1)')
+time_selector = driver.find_element(By.ID,'CellPlayDate')
 time_selector.click()
-time.sleep(1)
+driver.switch_to.parent_frame()
 
-# 예매하기 버튼 클릭
-book_button = driver.find_element_by_css_selector('#SmallNextBtn')
+
+# Next 버튼 클릭
+book_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//p[@class='btn' and @id='LargeNextBtn']/a[@id='LargeNextBtnLink']/img[@id='LargeNextBtnImage']")))
 book_button.click()
-time.sleep(1)
+
+
+
+# iframe으로 전환
+iframe1 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
+driver.switch_to.frame(iframe1)
+
+iframe2 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeatDetail")))
+driver.switch_to.frame(iframe2)
+
+
+# select_seat_button = driver.find_element(By.XPATH, "//img[@alt='[R석] 1층-D블록7열-3']")
+
 
 # 좌석 선택
-seat_button = driver.find_element_by_css_selector('#ifrmSeat > div.seatL > ul > li:nth-child(2) > div > a')
-seat_button.click()
-time.sleep(1)
+find_seats = set()
+count = 3
+lane = 4
+while len(find_seats) < 2:
+    if count >= 12:
+        lane +=1
+        count = 3
+    for i in range(count,count+2):
+        if len(find_seats) >= 2: break
+        
+        try:
+            seat_button = driver.find_element(By.XPATH, f"//img[@alt='[R석] 1층-C블록{lane}열-{i}']")
+            find_seats.add(seat_button)
+        except:
+            count += 1
+            find_seats.clear()
 
-# 좌석 선택 완료 버튼 클릭
-seat_select_button = driver.find_element_by_css_selector('#ifrmSeatDetail > div.wrap_bk_btn > a')
-seat_select_button.click()
-time.sleep(1)
+for seat in find_seats:
+    seat.click()
 
-# 매수 선택
-ticket_num_selector = Select(driver.find_element_by_css_selector('#CountSelect'))
-ticket_num_selector.select_by_visible_text('1')
-time.sleep(1)
-
-# 다음단계 버튼 클릭
-next_button1 = driver.find_element_by_css_selector('#LargeNextBtn')
-next_button1.click()
-time.sleep(1)
-
-# 생년월일 입력
-birth_year = driver.find_element_by_css_selector('#YY')
-birth_year.send_keys('YYYY')
-birth_month = driver.find_element_by_css_selector('#MM')
-birth_month.send_keys('MM')
-birth_day = driver.find_element_by_css_selector('#DD')
-birth_day.send_keys('DD')
-time.sleep(1)
-
-# 다음단계 버튼 클릭
-next_button2 = driver.find_element_by_css_selector('#LargeNextBtn')
-next_button2.click()
-time.sleep(1)
-
-# 무통장입금 선택
-payment_option_button = driver.find_element_by_css_selector('#PayMethodList > li:nth-child(2) > label')
-payment_option_button.click()
-time.sleep(1)
-
-# 입금 은행 선택
-bank_selector = Select(driver.find_element_by_css_selector('#BankCode'))
-bank_selector.select_by_visible_text('은행이름')
-time.sleep(1)
-
-# 다음단계 버튼 클릭
-next_button3 = driver.find_element_by_css_selector('#LargeNextBtn')
-next_button3.click()
-time.sleep(1)
-
-# 체크 버튼 클릭
-check_button = driver.find_element_by_css_selector('#Agree')
-check_button.click()
-time.sleep(1)
-
-# 결제하기 버튼 클릭
-pay_button = driver.find_element_by_css_selector('#LargeNextBtn')
-pay_button.click()
+driver.switch_to.parent_frame()
+button = driver.find_element(By.XPATH, "//img[@alt='좌석선택완료 버튼']")
+button.click()
 
 

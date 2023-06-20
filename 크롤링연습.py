@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import time
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 # 특정 포트에서 크롬실행 terminal에서 실행
@@ -22,11 +23,16 @@ service = Service(PATH)
 options = webdriver.ChromeOptions()
 options.add_experimental_option("debuggerAddress", "localhost:9222")
 
+
+
+
 # 디버그 포트를 이용하여 크롬 드라이버를 생성합니다.
 driver = webdriver.Chrome(service=service, options=options)
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 300)
 
-ticket_button = driver.find_element(By.XPATH, "//a[contains(@onclick, 'goTicket')]")
+driver.refresh()
+ticket_button = wait.until(EC.presence_of_element_located((By.XPATH, "//a[contains(@onclick, 'goTicket')]")))
+
 
 main_window_handle = driver.current_window_handle
 
@@ -72,36 +78,84 @@ book_button.click()
 iframe1 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
 driver.switch_to.frame(iframe1)
 
+iframe_seat = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeatView")))
+driver.switch_to.frame(iframe_seat)
+
+coords = "54,50,71,49,78,19,128,20,135,49,152,50,137,5,69,6"
+element = wait.until(EC.presence_of_element_located((By.XPATH, f"//area[@coords='{coords}']")))
+
+driver.execute_script("arguments[0].click();", element)
+
+alert = wait.until(EC.alert_is_present())
+time.sleep(3)
+
+
+driver.switch_to.parent_frame()
+
+iframe = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
+driver.switch_to.frame(iframe)
+
+
 iframe2 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeatDetail")))
 driver.switch_to.frame(iframe2)
 
 
-# select_seat_button = driver.find_element(By.XPATH, "//img[@alt='[R석] 1층-D블록7열-3']")
 
+#[B석] 합창석-F블록1열-1 -> 1열 5 / 2열 10 / 3열 14
 
 # 좌석 선택
+# 합창석
 find_seats = set()
-count = 3
-lane = 4
+count = 1
+lane = 1
 while len(find_seats) < 2:
-    if count >= 12:
+    if lane == 1 and count >=6:
         lane +=1
-        count = 3
-    for i in range(count,count+2):
-        if len(find_seats) >= 2: break
+        count = 1
+    elif lane == 2 and count >= 11:
+        lane +=1
+        count =1
+    elif lane == 3 and count >=15:
+        break
         
-        try:
-            seat_button = driver.find_element(By.XPATH, f"//img[@alt='[R석] 1층-C블록{lane}열-{i}']")
-            find_seats.add(seat_button)
-        except:
-            count += 1
-            find_seats.clear()
+    try:
+        seat_button = driver.find_element(By.XPATH, f"//img[@alt='[B석] 합창석-F블록{lane}열-{count}']")
+        seat_button.click()
+        find_seats.add(seat_button)
+    except:
+        count = count
+    
+    count += 1
 
-for seat in find_seats:
-    seat.click()
 
 driver.switch_to.parent_frame()
 button = driver.find_element(By.XPATH, "//img[@alt='좌석선택완료 버튼']")
 button.click()
+
+
+
+
+# R석
+# find_seats = set()
+# count = 1
+# lane = 1
+# while len(find_seats) < 2:
+#     if count >= 12:
+#         lane +=1
+#         count = 1
+        
+#     try:
+#         seat_button = driver.find_element(By.XPATH, f"//img[@alt='[R석] 1층-C블록{lane}열-{count}']")
+#         seat_button.click()
+#         find_seats.add(seat_button)
+#     except:
+#         count = count
+    
+#     count += 1
+
+
+# driver.switch_to.parent_frame()
+# button = driver.find_element(By.XPATH, "//img[@alt='좌석선택완료 버튼']")
+# button.click()
 
 

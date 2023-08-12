@@ -1,7 +1,9 @@
+def add(x,y):
+    return x + y
 
-k = set()
-for i in range(10):
-    a = int(input())
-    k.add(a%42)
+def outer(x):
+    def inner(y):
+        return x+y
+    return inner
 
-print(len(k))
+print(outer(4)(2))

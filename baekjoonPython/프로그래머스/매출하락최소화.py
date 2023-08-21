@@ -24,6 +24,7 @@ def solution(sales, links):
             
             min_val += min(dp[leaf])
             cnt += 1
+            # 0일 경우 매출액이
             if dp[leaf][0] < dp[leaf][1]:
                 zero_cnt +=1 
                 min_diff = min(min_diff,dp[leaf][1] - dp[leaf][0])

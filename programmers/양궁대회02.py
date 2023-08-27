@@ -1,58 +1,35 @@
-from collections import deque
-
 def solution(n, info):
-    
-    answer = bfs(n,info)
-    
-    if not answer:
-        return [-1]
-    
-    
-    return answer
+    global answer, result
 
+    def score(ryan):
+        s = 0
+        for i in range(11):
+            if ryan[i] == info[i] == 0:
+                continue
+            if ryan[i] > info[i]:
+                s += 10 - i
+            else:
+                s -= 10 - i
+        return s
 
+    def dfs(idx, left, ryan):
+        global answer, result
+        if idx == -1 and left:
+            return
+        if left == 0:
+            s = score(ryan)
+            if result < s:
+                answer = ryan[:]
+                result = s
+            return
+        for i in range(left, -1, -1):
+            ryan[idx] = i
+            dfs(idx-1, left-i, ryan)
+            ryan[idx] = 0
 
-def bfs(n,info):
-    high_point = 0
-    
-    res = []
-    q = deque()
-    q.append([0,[0,0,0,0,0,0,0,0,0,0,0]])
-    
-    while q:
-        focus, point = q.popleft()
-        
-        if sum(point) == n:
-            apeach = rion = 0
-            for i in range(11):
-                if point[i]== 0 and info[i] == 0:
-                    continue
-                if point[i] > info[i]:
-                    rion += 10 - i
-                else:
-                    apeach += 10 -i
-            
-            if rion > apeach and rion >= high_point:
-                res = point.copy()
-                
-                high_point = rion
-                
-        
-        elif sum(point) > n:
-            continue
-        
-        elif focus == 10:
-            tmp = point.copy()
-            tmp[focus] = n - sum(tmp)
-            q.append([-1,tmp])
-            
-        else:
-            q.append([focus+1,point.copy()])
-            
-            point[focus] = info[focus] +1
-            q.append([focus+1,point.copy()])
-    return res
-
-
+    answer = [0 for _ in range(11)]
+    result = 0
+    dfs(10, n, [0 for _ in range(11)])
+    return answer if result != 0 else [-1]
 
 solution(5,[2,1,1,1,0,0,0,0,0,0,0])

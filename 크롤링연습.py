@@ -7,11 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import time
 from selenium.webdriver.common.action_chains import ActionChains
-
+import urllib.request
 
 # 특정 포트에서 크롬실행 terminal에서 실행
 # /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/Users/eenaa/selenium/AutomationProfile &
 
+startHour = 24
+minute = 0
 
 # 크롬 드라이버 경로 설정
 PATH = "/Users/eenaa/chromedriver"
@@ -31,6 +33,23 @@ driver = webdriver.Chrome(service=service, options=options)
 wait = WebDriverWait(driver, 300)
 
 driver.refresh()
+
+url = driver.current_url
+
+
+date = urllib.request.urlopen(url).headers['Date']
+timeCheck = (time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z'))
+
+while True:
+    if timeCheck.tm_hour + 9 == startHour and timeCheck.tm_min >= minute:
+        break
+    date = urllib.request.urlopen(url).headers['Date']
+    timeCheck = (time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z'))
+    print(timeCheck.tm_hour)
+    print(timeCheck.tm_min)
+
+
+
 ticket_button = wait.until(EC.presence_of_element_located((By.XPATH, "//a[contains(@onclick, 'goTicket')]")))
 
 
@@ -38,23 +57,24 @@ main_window_handle = driver.current_window_handle
 
 ticket_button.click()
 
-time.sleep(1)
+driver.implicitly_wait(5)
 # 링크나 버튼을 클릭하여 새로운 창을 엽니다.
 # 새로운 창이 열리면 여러 개의 창 핸들이 있을 수 있습니다.
 
 # 모든 창 핸들을 얻습니다.
-all_window_handles = driver.window_handles
+
 
 new_window_handle = None
-for window_handle in all_window_handles:
-    if window_handle != main_window_handle:
-        new_window_handle = window_handle
-        break
+check = True
+while check:
+    for window_handle in driver.window_handles:
+        if window_handle != main_window_handle:
+            new_window_handle = window_handle
+            check = False
+            break
     
 
-driver.switch_to.window(new_window_handle)
-
-
+driver.switch_to.window(new_window_handle)  
 
 
 # iframe으로 전환
@@ -73,7 +93,6 @@ book_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//p[@class='btn'
 book_button.click()
 
 
-
 # iframe으로 전환
 iframe1 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
 driver.switch_to.frame(iframe1)
@@ -87,13 +106,45 @@ element = wait.until(EC.presence_of_element_located((By.XPATH, f"//area[@coords=
 driver.execute_script("arguments[0].click();", element)
 
 alert = wait.until(EC.alert_is_present())
-time.sleep(3)
 
+
+check = False
+
+while not check:
+    try:
+        driver.switch_to.parent_frame()
+        check = True
+    except:
+        
+        check = False
+
+
+iframe = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeatView")))
+driver.switch_to.frame(iframe)
+
+
+javascript_code = '''
+var element = document.querySelector('area[href="javascript:GetBlockSeatList(\'\', \'\', \'RGN004\')"]');
+element.click();
+'''
+
+
+driver.execute_script(javascript_code)
+
+
+element = driver.find_element(By.XPATH,'//area[contains(@alt, "RGN004영역")]')
+# element = wait.until(EC.presence_of_element_located((By.XPATH, '//area[contains(@alt, "RGN004영역")]')))
+# JavaScript를 사용하여 클릭 시도
+driver.execute_script("arguments[0].click();", element)
+
+# 웹 드라이버 종료
+driver.quit()
 
 driver.switch_to.parent_frame()
 
-iframe = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
-driver.switch_to.frame(iframe)
+
+iframe1 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeat")))
+driver.switch_to.frame(iframe1)
 
 
 iframe2 = wait.until(EC.presence_of_element_located((By.ID, "ifrmSeatDetail")))

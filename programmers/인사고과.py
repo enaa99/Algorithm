@@ -1,5 +1,5 @@
 
-
+from collections import deque
 def solution(scores):
     answer = 1
     
@@ -25,6 +25,7 @@ def solution(scores):
                 answer +=1
         
     
+
     
     return answer
 

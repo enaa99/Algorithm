@@ -1,13 +1,12 @@
 #include <iostream>
 #include <string>
 
-
+using na
 int main() {
 
-    std::string s = "abc";
-
-    std::cout << s << std::endl;
-
-    return 0;
+    for(int i = 0; i< 5; i++) {
+        
+        
+    }
 
 }

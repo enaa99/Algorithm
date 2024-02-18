@@ -3,22 +3,22 @@ import heapq
 class Solution:
     def mostBooked(n: int, meetings:list) -> int:
         meetings.sort()
-        free_rooms = [i for i in range(n)]
-        busy_rooms = []
+        free = [i for i in range(n)]
+        busy = []
         count = [0] * n
         
         for start, end in meetings:
-            while busy_rooms and busy_rooms[0][0] <= start:
-                _, room = heapq.heappop(busy_rooms)
-                heapq.heappush(free_rooms, room)
+            while busy and busy[0][0] <= start:
+                _, room = heapq.heappop(busy)
+                heapq.heappush(free, room)
             
-            if free_rooms:
-                room = heapq.heappop(free_rooms)
+            if free:
+                room = heapq.heappop(free)
             else:
-                end_time, room = heapq.heappop(busy_rooms)
+                end_time, room = heapq.heappop(busy)
                 end += end_time - start
             
-            heapq.heappush(busy_rooms, (end, room))
+            heapq.heappush(busy, (end, room))
             count[room] += 1
         
         cnt = max(count)

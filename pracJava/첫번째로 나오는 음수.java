@@ -1,4 +1,4 @@
-import java.util.C
+import java.util.*;
 class Solution {
     public int solution(int[] num_list) {
         

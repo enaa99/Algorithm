@@ -3,91 +3,9 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Solution",
+      "name": "Debug Current File",
       "request": "launch",
-      "mainClass": "miri.Solution",
-      "projectName": "Algorithm_4986af23"
-    },
-    {
-      "type": "java",
-      "name": "선입선출스케줄링",
-      "request": "launch",
-      "mainClass": "선입선출스케줄링",
-      "projectName": "Algorithm_4986af23"
-    },
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "Main",
-      "projectName": "Algorithm_4986af23"
-    },
-    {
-      "type": "java",
-      "name": "Solution",
-      "request": "launch",
-      "mainClass": "Solution",
-      "projectName": "Algorithm_4986af23"
-    },
-    {
-      "name": "Python: 현재 파일",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "C/C++: clang++ 활성 파일 빌드 및 디버그",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "lldb",
-      "preLaunchTask": "C/C++: clang++ 활성 파일 빌드"
-    },
-    {
-      "name": "C/C++: clang 활성 파일 빌드 및 디버그",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "lldb",
-      "preLaunchTask": "C/C++: clang 활성 파일 빌드"
-    },
-    {
-      "name": "C/C++: g++ 활성 파일 빌드 및 디버그",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "lldb",
-      "preLaunchTask": "C/C++: g++ 활성 파일 빌드"
-    },
-    {
-      "name": "C/C++: cpp 활성 파일 빌드 및 디버그",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "lldb",
-      "preLaunchTask": "C/C++: cpp 활성 파일 빌드"
+      "mainClass": "${file}"
     }
   ]
 }

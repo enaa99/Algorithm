@@ -17,7 +17,7 @@ def solution(info, edges):
                     dfs(sheep, wolf+1)
                 visited[c] = 0
 
-	# 루트 노드부터 시작
+    # 루트 노드부터 시작
     visited[0] = 1
     dfs(1, 0)
 
